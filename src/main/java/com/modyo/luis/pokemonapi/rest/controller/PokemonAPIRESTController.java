@@ -1,5 +1,6 @@
 package com.modyo.luis.pokemonapi.rest.controller;
 
+import com.modyo.luis.pokemonapi.data.Evolution;
 import com.modyo.luis.pokemonapi.data.PokemonDetail;
 import com.modyo.luis.pokemonapi.data.PokemonList;
 import com.modyo.luis.pokemonapi.rest.client.PokeAPIRestClient;
@@ -14,12 +15,17 @@ public class PokemonAPIRESTController {
     PokeAPIRestClient covidClient;
 
     @GetMapping(value = "/pokemon", produces = "application/json")
-    public PokemonList getPokemonList() {
-        return covidClient.getPokemonList();
+    public PokemonList getPokemonList(@RequestParam(name = "limit", required = false, defaultValue = "20") String limit, @RequestParam(name = "offset", required = false, defaultValue = "20") String offset) {
+        return covidClient.getPokemonList(limit, offset);
     }
 
     @GetMapping(value = "/pokemon/{name}", produces = "application/json")
     public PokemonDetail getPokemonDetail(@PathVariable("name") String name) {
         return covidClient.getPokemonDetail(name);
+    }
+
+    @GetMapping(value = "/evolution-chain/{id}", produces = "application/json")
+    public Evolution getPokemonEvolutions(@PathVariable("id") String id) {
+        return covidClient.getPokemonEvolutions(id);
     }
 }
