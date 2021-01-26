@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -38,6 +39,14 @@ class PokemonApiApplicationTests {
 		Evolution evolutions = pokeAPIRestClient.getPokemonEvolutions(pokemonBulbasaurId);
 		System.out.println("evolutions: " + evolutions.getChain().getEvolvesTo());
 		assertTrue(Integer.parseInt(String.valueOf(evolutions.getChain().getEvolvesTo().size())) > 0);
+	}
+
+	@Test
+	public void testGetPokemonChainId() {
+		String pokemonCharmanderId = "4";
+		Integer chainId = pokeAPIRestClient.getPokemonSpecieId(pokemonCharmanderId);
+		System.out.println("chainId: " + chainId);
+		assertEquals(chainId, 2);
 	}
 
 }

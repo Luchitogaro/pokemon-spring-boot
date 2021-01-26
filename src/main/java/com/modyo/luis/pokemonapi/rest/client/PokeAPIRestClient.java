@@ -3,6 +3,7 @@ package com.modyo.luis.pokemonapi.rest.client;
 import com.modyo.luis.pokemonapi.data.Evolution;
 import com.modyo.luis.pokemonapi.data.PokemonDetail;
 import com.modyo.luis.pokemonapi.data.PokemonList;
+import com.modyo.luis.pokemonapi.data.PokemonSpecie;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -96,6 +97,31 @@ public class PokeAPIRestClient {
             e.printStackTrace();
         }
         return pokemonEvolutions;
+    }
+
+    /**
+     * Get Pokemon specie for a real Id
+     * @param id
+     * @return @type{PokemonSpecie}
+     */
+    public Integer getPokemonSpecieId(String id) {
+        PokemonSpecie pokemonSpecie = null;
+        try {
+            URI uri;
+            uri = new URI(pokemonURL+"/pokemon-species/"+id);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            HttpEntity<String> request = new HttpEntity<String>(headers);
+            ResponseEntity<PokemonSpecie> pokemonEvolutionsEntity = restTemplate.exchange(uri, HttpMethod.GET, request,
+                    PokemonSpecie.class);
+            pokemonSpecie = pokemonEvolutionsEntity.getBody();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String urlChain[] = pokemonSpecie.getEvolutionChain().getUrl().split("/");
+        return Integer.parseInt(urlChain[urlChain.length -1]);
     }
 }
 

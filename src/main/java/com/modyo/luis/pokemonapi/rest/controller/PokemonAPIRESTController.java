@@ -28,4 +28,9 @@ public class PokemonAPIRESTController {
     public Evolution getPokemonEvolutions(@PathVariable("id") String id) {
         return covidClient.getPokemonEvolutions(id);
     }
+
+    @GetMapping(value = "/pokemon-species/{id}", produces = "application/json")
+    public Integer getPokemonSpecieId(@PathVariable("id") String id) {
+        return covidClient.getPokemonSpecieId(id);
+    }
 }
