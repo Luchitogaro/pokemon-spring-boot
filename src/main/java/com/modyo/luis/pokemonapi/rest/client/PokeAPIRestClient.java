@@ -6,6 +6,7 @@ import com.modyo.luis.pokemonapi.data.PokemonList;
 import com.modyo.luis.pokemonapi.data.PokemonSpecie;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -32,11 +33,12 @@ public class PokeAPIRestClient {
      * @param offset Quantity of elements
      * @return @type{PokemonList} Of resources
      */
+    @Cacheable("pokemon")
     public PokemonList getPokemonList(String limit, String offset) {
         PokemonList pokemonList = null;
         try {
             URI uri;
-            uri = new URI(pokemonURL+"/pokemon?"+"limit"+limit+"&offset"+offset);
+            uri = new URI(pokemonURL+"/pokemon?"+"limit="+limit+"&offset="+offset);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -56,6 +58,7 @@ public class PokeAPIRestClient {
      * @param pokemonName Name of Pokemon
      * @return Details of @type{PokemonDetail}
      */
+    @Cacheable("pokemonDetail")
     public PokemonDetail getPokemonDetail(String pokemonName) {
         PokemonDetail pokemonDetail = null;
         try {
@@ -80,6 +83,7 @@ public class PokeAPIRestClient {
      * @param id Id refer a Pokemon
      * @return @type{Evolution} object
      */
+    @Cacheable("evolution")
     public Evolution getPokemonEvolutions(String id) {
         Evolution pokemonEvolutions = null;
         try {
@@ -104,6 +108,7 @@ public class PokeAPIRestClient {
      * @param id
      * @return @type{PokemonSpecie}
      */
+    @Cacheable("pokemonSpecie")
     public Integer getPokemonSpecieId(String id) {
         PokemonSpecie pokemonSpecie = null;
         try {
