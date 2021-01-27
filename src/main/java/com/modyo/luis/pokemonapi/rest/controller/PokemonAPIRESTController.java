@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 public class PokemonAPIRESTController {
 
     @Autowired
-    PokeAPIRestClient covidClient;
+    PokeAPIRestClient pokeAPIRestClient;
 
     @GetMapping(value = "/pokemon", produces = "application/json")
     public PokemonList getPokemonList(@RequestParam(name = "limit", required = false, defaultValue = "20") String limit, @RequestParam(name = "offset", required = false, defaultValue = "20") String offset) {
-        return covidClient.getPokemonList(limit, offset);
+        return pokeAPIRestClient.getPokemonList(limit, offset);
     }
 
     @GetMapping(value = "/pokemon/{name}", produces = "application/json")
     public PokemonDetail getPokemonDetail(@PathVariable("name") String name) {
-        return covidClient.getPokemonDetail(name);
+        return pokeAPIRestClient.getPokemonDetail(name);
     }
 
     @GetMapping(value = "/evolution-chain/{id}", produces = "application/json")
     public Evolution getPokemonEvolutions(@PathVariable("id") String id) {
-        return covidClient.getPokemonEvolutions(id);
+        return pokeAPIRestClient.getPokemonEvolutions(id);
     }
 
     @GetMapping(value = "/pokemon-species/{id}", produces = "application/json")
