@@ -31,6 +31,6 @@ public class PokemonAPIRESTController {
 
     @GetMapping(value = "/pokemon-species/{id}", produces = "application/json")
     public Integer getPokemonSpecieId(@PathVariable("id") String id) {
-        return covidClient.getPokemonSpecieId(id);
+        return pokeAPIRestClient.getPokemonSpecieId(id);
     }
 }
